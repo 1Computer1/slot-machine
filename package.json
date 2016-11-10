@@ -1,0 +1,8 @@
+{
+  "name": "slot-machine",
+  "version": "1.0.1",
+  "description": "A functioning slot machine!",
+  "main": "index.js",
+  "author": "1Computer",
+  "license": "MIT"
+}
