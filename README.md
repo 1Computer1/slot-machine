@@ -40,5 +40,5 @@ Returns an array, containing the points and results of the lines inputted.
 
 ##### `format(lines[, includeDiagonals = true])`  
 `lines` An array of arrays containing Symbols, or calculated lines.  
-`includeDiagonals` Whether or not to include diagonals.  
+`includeDiagonals` Whether or not to include diagonals. Only works with calculated lines.  
 Returns a formatted slot machine game.

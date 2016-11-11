@@ -74,6 +74,7 @@ module.exports.calculate = (lines) => {
 /**
  * Formats lines for easier viewing.
  * @param lines - An array of arrays containing Symbols, or an array of rows containing points and results.
+ * @param includeDiagonals - Whether or not to include diagonals. Only works with calculated lines.
  * @return A formatted slot machine game.
  */
 module.exports.format = (lines, includeDiagonals = true) => {
