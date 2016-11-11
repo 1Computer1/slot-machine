@@ -60,6 +60,7 @@ module.exports.calculate = (lines) => {
 		}
 		
 		lines[i] = {symbols, win, points: symbols.reduce((a, b) => a + b.points, 0)};
+		lines[i].diagonal = false;
 
 		if (i === lines.length - 1 || i === lines.length - 2){
 			lines[i].diagonal = true;	
@@ -75,8 +76,12 @@ module.exports.calculate = (lines) => {
  * @param lines - An array of arrays containing Symbols, or an array of rows containing points and results.
  * @return A formatted slot machine game.
  */
-module.exports.format = (lines) => {
+module.exports.format = (lines, includeDiagonals = true) => {
 	if (lines.calculated){
+		if (!includeDiagonals){
+			lines = lines.filter((l) => !l.diagonal);
+		}
+
 		return lines.map((l) => l.symbols.map((s) => s.symbol).join(' ') + ' ' + (l.diagonal ? 'Diagonal ' : '') + (l.win ? 'Win!' : '')).join('\n');
 	}
 
