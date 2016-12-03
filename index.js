@@ -1,4 +1,4 @@
-let Symbol = require('./symbol.js');
+let Symbol = require('./struct/Symbol.js');
 
 module.exports.Symbol = Symbol;
 
@@ -9,16 +9,15 @@ module.exports.Symbol = Symbol;
  * @return An array of rows in the generated slot game, plus two more representing the diagonals. Contains the points and the results of the lines.
  */
 module.exports.play = (symbols, size) => {
-	if (!size || size < 3){
-		size = 3;
-	}
+	// Disallow less than 3
+	if (!size || size < 3) size = 3;
 
-	if (size % 2 === 0){
-		size += 1;
-	}
+	// Disallow evens
+	if (size % 2 === 0) size += 1;
 
 	let chosens = [];
 
+	// Weighted randomizer
 	for (let i = 0; i < size * size; i++){
 		let rand = Math.random() * symbols.reduce((a, b) => a + b.weight, 0);
 		let sum = 0;
@@ -38,6 +37,7 @@ module.exports.play = (symbols, size) => {
 		lines[i] = chosens.slice(i * size, (i + 1) * size);
 	}
 
+	// Push the diagonals. This took forever to get correct!
 	lines.push(chosens.filter((s, i) => (i + size + 1) % (size + 1) === 0));
 	lines.push(chosens.slice(size - 1).filter((s, i) => i % (size - 1) === 0).reverse().slice(1));
 
@@ -50,26 +50,24 @@ module.exports.play = (symbols, size) => {
  * @return An array, containing the points and results of the lines inputted.
  */
 module.exports.calculate = (lines) => {
-	lines.forEach((symbols, i) => {
+	let copy = lines;
+	
+	copy.forEach((symbols, i, l) => {
 		let win = false;
 
-		let remainder = symbols.filter((s) => !s.wild).filter((s) => s.name !== symbols[0].name);
+		let remainder = symbols.filter(s => !s.wild && s.name !== symbols[0].name);
 
-		if (remainder.length === 0){
-			win = true;
-		}
+		if (remainder.length === 0) win = true;
 		
-		lines[i] = {symbols, win, points: symbols.reduce((a, b) => a + b.points, 0)};
-		lines[i].diagonal = false;
+		copy[i] = {symbols, win, points: win ? symbols.reduce((a, b) => a + b.points, 0) : 0};
+		copy[i].diagonal = false;
 
-		if (i === lines.length - 1 || i === lines.length - 2){
-			lines[i].diagonal = true;	
-		}
+		if (i >= l.length - 2) copy[i].diagonal = true;	
 	});
 
-	lines.calculated = true;
-	return lines;
-}
+	copy.calculated = true;
+	return copy;
+};
 
 /**
  * Formats lines for easier viewing.
@@ -78,13 +76,11 @@ module.exports.calculate = (lines) => {
  * @return A formatted slot machine game.
  */
 module.exports.format = (lines, includeDiagonals = true) => {
+	if (!includeDiagonals) lines = lines.filter(l => !l.diagonal);
+	
 	if (lines.calculated){
-		if (!includeDiagonals){
-			lines = lines.filter((l) => !l.diagonal);
-		}
-
-		return lines.map((l) => l.symbols.map((s) => s.symbol).join(' ') + ' ' + (l.diagonal ? 'Diagonal ' : '') + (l.win ? 'Win!' : '')).join('\n');
+		return lines.map(l => l.symbols.map(s => s.symbol).join(' ') + ' ' + (l.diagonal ? 'Diagonal ' : '') + (l.win ? 'Win!' : '')).join('\n');
 	}
 
-	return lines.map((l) => l.map((s) => s.symbol).join(' ')).join('\n');
-}
+	return lines.map(l => l.map(s => s.symbol).join(' ')).join('\n');
+};
