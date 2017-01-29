@@ -1,45 +1,41 @@
 ### Usage
 ```js
-const slotMachine = require('slot-machine');
-const Symbol = slotMachine.Symbol;
+const { SlotMachine, Symbol } = require('slot-machine');
 
-let cherry = new Symbol('cherry', '🍒', 1, 10);
-let money = new Symbol('money', '💰', 10, 5);
-let wildcard = new Symbol('wildcard', '❔', 5, 1, true);
+const cherry = new Symbol('cherry', {
+    display: '🍒',
+    points: 10,
+    weight: 100
+});
 
-let results = slotMachine.play([cherry, money, wildcard], 3);
+const money = new Symbol('money', {
+    display: '💰',
+    points: 100,
+    weight: 50
+});
 
-console.log(results[0].win); // false
-console.log(results[1].symbols); // [money, money, cherry]
-console.log(results[2].points); // 7
-console.log(results[3].diagonal); // true
+const wild = new Symbol('wild', {
+    display: '❔',
+    points: 10,
+    weight: 50,
+    wildcard: true
+});
 
-console.log(slotMachine.format(results));
+const machine = new SlotMachine(3, [cherry, money, wild]);
+const results = machine.play();
+
+results.visualize(true);
 // 🍒 🍒 💰
 // 💰 💰 🍒
-// ❔ 🍒 🍒 Win!
-// 🍒 💰 🍒 Diagonal
-// ❔ 💰 💰 Diagonal Win!
+// ❔ 🍒 🍒
+//
+// 🍒 💰 🍒
+// ❔ 💰 💰
+
+results.totalPoints; // 240
+results.winCount; // 2
+results.lines[0].symbols; // [cherry, cherry, money]
+results.lines[1].points; // 0
+results.lines[2].isWon; // true
+results.lines[3].diagonal; // true
 ```
-### Documentation
-##### Symbol(name, symbol[, points = 1, weight = 1, wild = false])
-`name` A unique name.  
-`symbol` A symbol for display.  
-`points` How many points this Symbol gives.  
-`weight` Chance of this Symbol appearing.  
-`wild` Whether or not the Symbol can match with any other Symbol. 
-*Creates a Symbol.*
-
-##### play(symbols[, size = 3]) 
-`symbols` An array of Symbols.  
-`size` Grid size, will round to nearest odd number above 3.  
-*Returns an array of rows in the slot game, plus two representing diagonals.*
-
-##### calculate(lines)
-`lines` An array of arrays containing Symbols.  
-*Returns an array, containing the points and results of the lines inputted.*
-
-##### format(lines[, includeDiagonals = true])
-`lines` An array of arrays containing Symbols, or calculated lines.  
-`includeDiagonals` Whether or not to include diagonals. Only works with calculated lines.  
-*Returns a formatted slot machine game.*
