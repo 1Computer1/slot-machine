@@ -23,8 +23,12 @@ class EvaluatedLine {
      * @type {boolean}
      */
     get isWon() {
-        const remainder = this.symbols.filter(s => !s.wild && s.name !== this.symbols[0].name);
+        const nonWild = this.symbols.find(s => !s.wildcard);
+        if (!nonWild) return true;
+
+        const remainder = this.symbols.filter(s => !s.wildcard && s.name !== nonWild.name);
         if (!remainder.length) return true;
+
         return false;
     }
 
