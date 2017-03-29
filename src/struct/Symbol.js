@@ -13,7 +13,7 @@ class Symbol {
      * @param {string} name - A unique name for the Symbol.
      * @param {SymbolOptions} options - Options for the symbol.
      */
-    constructor(name, options = {}){
+    constructor(name, options = {}) {
         /**
          * Unique name of this symbol.
          * @type {string}
@@ -49,7 +49,7 @@ class Symbol {
      * Returns the display character.
      * @returns {string}
      */
-    toString(){
+    toString() {
         return this.display;
     }
 }

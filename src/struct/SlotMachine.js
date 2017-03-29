@@ -7,7 +7,7 @@ class SlotMachine {
      * @param {number} size - Size of the slot machine. Must be an odd number, 3 or higher.
      * @param {Symbol[]} symbols - Array of symbols to use.
      */
-    constructor(size = 3, symbols = []){
+    constructor(size = 3, symbols = []) {
         if (size % 2 === 0 || size < 3) throw new RangeError('Slot machine size must be an odd number, 3 or higher.');
         if (!symbols.length) throw new RangeError('There must be at least one symbol.');
 
@@ -28,18 +28,18 @@ class SlotMachine {
      * Plays the slot machine.
      * @returns {Results}
      */
-    play(){
+    play() {
         const chosens = [];
         const totalWeight = this.symbols.reduce((total, symbol) => total + symbol.weight, 0);
 
-        for (let i = 0; i < Math.pow(this.size, 2); i++){
+        for (let i = 0; i < Math.pow(this.size, 2); i++) {
             const rand = Math.random() * totalWeight;
             let sum = 0;
 
-            for (let j = 0; j < this.symbols.length; j++){
+            for (let j = 0; j < this.symbols.length; j++) {
                 sum += this.symbols[j].weight;
 
-                if (rand <= sum){
+                if (rand <= sum) {
                     chosens.push(this.symbols[j]);
                     break;
                 }
@@ -48,7 +48,7 @@ class SlotMachine {
 
         const lines = [];
 
-        for (let i = 0; i < chosens.length / this.size; i++){
+        for (let i = 0; i < chosens.length / this.size; i++) {
             lines.push(chosens.slice(i * this.size, (i + 1) * this.size));
         }
 
@@ -63,10 +63,10 @@ class SlotMachine {
      * @param {string} name - Name of the symbol.
      * @returns {number}
      */
-    chanceOf(name){
+    chanceOf(name) {
         const matchedSymbol = this.symbols.find(symbol => symbol.name === name);
         const totalWeight = this.symbols.reduce((total, symbol) => total + symbol.weight, 0);
-        
+
         return matchedSymbol.weight / totalWeight;
     }
 }

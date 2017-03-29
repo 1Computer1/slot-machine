@@ -6,6 +6,9 @@
   "keywords": ["slot machine", "slots", "gambling", "rng"],
   "author": "1Computer",
   "license": "MIT",
+  "devDependencies": {
+    "eslint": "^3.18.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/1Computer1/slot-machine.git"

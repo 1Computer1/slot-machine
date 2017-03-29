@@ -4,7 +4,7 @@ class EvaluatedLine {
      * @param {Symbol[]} symbols - Symbols in this line.
      * @param {boolean} [diagonal=false] - Whether or not this line is a diagonal.
      */
-    constructor(symbols, diagonal = false){
+    constructor(symbols, diagonal = false) {
         /**
          * Symbols in this line.
          * @type {Symbol[]}
@@ -22,7 +22,7 @@ class EvaluatedLine {
      * Whether or not this line has been won.
      * @type {boolean}
      */
-    get isWon(){
+    get isWon() {
         const remainder = this.symbols.filter(s => !s.wild && s.name !== this.symbols[0].name);
         if (!remainder.length) return true;
         return false;
@@ -32,7 +32,7 @@ class EvaluatedLine {
      * If won, amount of points this line gives.
      * @type {number}
      */
-    get points(){
+    get points() {
         if (!this.isWon) return 0;
         return this.symbols.reduce((total, symbol) => total + symbol.points, 0);
     }
