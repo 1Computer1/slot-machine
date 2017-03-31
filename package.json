@@ -1,7 +1,7 @@
 {
   "name": "slot-machine",
-  "version": "2.0.1",
-  "description": "An OOP slot machine.",
+  "version": "2.0.2",
+  "description": "A slot machine.",
   "main": "src/index.js",
   "keywords": ["slot machine", "slots", "gambling", "rng"],
   "author": "1Computer",
