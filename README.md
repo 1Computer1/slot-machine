@@ -30,7 +30,7 @@ results.visualize(true);
 // ❔ 🍒 🍒
 //
 // 🍒 💰 🍒
-// ❔ 💰 💰
+// 💰 💰 ❔
 
 results.totalPoints; // 240
 results.winCount; // 2
