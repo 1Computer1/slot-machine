@@ -1,20 +1,20 @@
 ### Usage
 ```js
-const { SlotMachine, Symbol } = require('slot-machine');
+const { SlotMachine, SlotSymbol } = require('slot-machine');
 
-const cherry = new Symbol('cherry', {
+const cherry = new SlotSymbol('cherry', {
     display: '🍒',
     points: 10,
     weight: 100
 });
 
-const money = new Symbol('money', {
+const money = new SlotSymbol('money', {
     display: '💰',
     points: 100,
     weight: 50
 });
 
-const wild = new Symbol('wild', {
+const wild = new SlotSymbol('wild', {
     display: '❔',
     points: 10,
     weight: 50,

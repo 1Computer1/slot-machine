@@ -1,5 +1,5 @@
 /**
- * Options for a Symbol.
+ * Options for a SlotSymbol.
  * @typedef {Object} SymbolOptions
  * @prop {string} [display='?'] - A decorational character that represents the symbol.
  * @prop {number} [points=1] - How many points the symbol gives.
@@ -7,10 +7,10 @@
  * @prop {boolean} [wildcard=false] - Whether or not this symbol is a wildcard, matching with all other symbols.
  */
 
-class Symbol {
+class SlotSymbol {
     /**
      * Creates a symbol for use in the slot machine.
-     * @param {string} name - A unique name for the Symbol.
+     * @param {string} name - A unique name for the symbol.
      * @param {SymbolOptions} options - Options for the symbol.
      */
     constructor(name, options = {}) {
@@ -54,4 +54,4 @@ class Symbol {
     }
 }
 
-module.exports = Symbol;
+module.exports = SlotSymbol;
