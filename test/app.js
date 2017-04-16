@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 const { SlotMachine, SlotSymbol } = require('../src/index');
 
 const cherry = new SlotSymbol('cherry', {
@@ -23,6 +25,7 @@ const machine = new SlotMachine(3, [cherry, money, wild]);
 const results = machine.play();
 
 console.log(results.visualize(true));
+console.log(results.lines.map(l => l.isWon));
 console.log(results.totalPoints, results.winCount);
 console.log(results.lines[0].symbols);
 console.log(results.lines[1].points);
