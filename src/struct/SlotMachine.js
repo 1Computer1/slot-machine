@@ -6,8 +6,9 @@ class SlotMachine {
      * Creates a new slot machine.
      * @param {number} size - Size of the slot machine. Must be an odd number, 3 or higher.
      * @param {Symbol[]} symbols - Array of symbols to use.
+     * @param {Function} [random] - A function that returns a number [0, 1).
      */
-    constructor(size = 3, symbols = []) {
+    constructor(size = 3, symbols = [], random = () => Math.random()) {
         if (size % 2 === 0 || size < 3) throw new RangeError('Slot machine size must be an odd number, 3 or higher.');
         if (!symbols.length) throw new RangeError('There must be at least one symbol.');
 
@@ -22,6 +23,13 @@ class SlotMachine {
          * @type {Symbol[]}
          */
         this.symbols = symbols;
+
+        /**
+         * The function used for randomizing.
+         * Returns [0, 1).
+         * @returns {number}
+         */
+        this.random = random;
     }
 
     /**
@@ -33,7 +41,7 @@ class SlotMachine {
         const totalWeight = this.symbols.reduce((total, symbol) => total + symbol.weight, 0);
 
         for (let i = 0; i < Math.pow(this.size, 2); i++) {
-            const rand = Math.random() * totalWeight;
+            const rand = this.random() * totalWeight;
             let sum = 0;
 
             for (let j = 0; j < this.symbols.length; j++) {
